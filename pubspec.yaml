@@ -11,6 +11,17 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Architecture
+  flutter_bloc: ^8.0.1
+  get_it: ^7.2.0
+
+  # Networking
+  http: ^0.13.4
+
+  # JSON serialization/deserialization annotations
+  freezed_annotation: ^1.1.0
+  json_annotation: ^4.4.0
+
   # Flutter Mapbox GL + location
   mapbox_gl: ^0.15.0
   location: ^4.3.0
@@ -18,7 +29,16 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  # Linter
   flutter_lints: ^1.0.4
+
+  # Build runner
+  build_runner: ^2.1.7
+
+  # JSON serialization/deserialization
+  freezed: ^1.1.1
+  json_serializable: ^6.1.4
 
 flutter:
   uses-material-design: true

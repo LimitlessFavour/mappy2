@@ -18,3 +18,9 @@ You need to provide the public token via `--dart-define`
 ```bash
 flutter run --dart-define=ACCESS_TOKEN=<public-access-token>
 ```
+
+Tests check if points of interest are fetched correctly from Mapbox's Search API
+
+```bash
+flutter test --dart-define=ACCESS_TOKEN=<public-access-token>
+```

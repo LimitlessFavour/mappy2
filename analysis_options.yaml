@@ -3,6 +3,10 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   exclude:
     - "build/**"
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+  errors:
+    invalid_annotation_target: ignore
   language:
     strict-raw-types: true
   strong-mode:

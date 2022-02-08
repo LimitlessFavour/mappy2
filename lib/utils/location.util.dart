@@ -7,7 +7,7 @@ Future<LocationData> getCurrentLocation() async {
   if (!isServiceEnabled) {
     isServiceEnabled = await location.requestService();
     if (!isServiceEnabled) {
-      throw LocationException('Location services are disabled');
+      throw Exception('Location services are disabled');
     }
   }
 
@@ -15,15 +15,9 @@ Future<LocationData> getCurrentLocation() async {
   if (permissionStatus == PermissionStatus.denied) {
     permissionStatus = await location.requestPermission();
     if (permissionStatus != PermissionStatus.granted) {
-      throw LocationException('Location permission denied');
+      throw Exception('Location permission denied');
     }
   }
 
   return location.getLocation();
-}
-
-class LocationException implements Exception {
-  final String message;
-
-  LocationException(this.message);
 }
