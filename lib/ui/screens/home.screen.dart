@@ -26,13 +26,13 @@ class _HomeScreenState extends State<HomeScreen> with UiLoggy {
     return Scaffold(
       body: BlocListener<DataCubit, DataState>(
         listener: (BuildContext context, DataState state) {
-          if (state.status == DataStatus.successful && state.response != null) {
+          if (state.status == DataStatus.successful) {
             final features = state.response?.features ?? <FeatureModel>[];
 
             final coordinatesString = features
                 .map((element) => element.coordinates)
                 .map((element) => '${element.latitude},${element.longitude}')
-                .join(', ');
+                .join(' | ');
             loggy.debug('Add symbols at $coordinatesString');
 
             _mapController?.addSymbols(
@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> with UiLoggy {
                   .map(
                     (FeatureModel element) => SymbolOptions(
                       geometry: element.coordinates,
-                      // iconImage: 'assets/location_pin.png',
+                      iconImage: 'assets/location_pin.png',
                       draggable: false,
                     ),
                   )

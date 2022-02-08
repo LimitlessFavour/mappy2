@@ -17,12 +17,12 @@ class DataState extends Equatable {
   factory DataState.loading() => const DataState._(status: DataStatus.loading);
 
   factory DataState.successful(ResponseModel data) => DataState._(
-        status: DataStatus.loading,
+        status: DataStatus.successful,
         response: data,
       );
 
   factory DataState.failed(String errorMessage) => DataState._(
-        status: DataStatus.loading,
+        status: DataStatus.failed,
         errorMessage: errorMessage,
       );
 
