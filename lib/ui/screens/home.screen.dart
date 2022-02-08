@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loggy/loggy.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:mappy2/data/blocs/data.cubit.dart';
 import 'package:mappy2/data/blocs/data.state.dart';
@@ -14,7 +13,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with UiLoggy {
+class _HomeScreenState extends State<HomeScreen> {
   static const CameraPosition _defaultCameraPosition = CameraPosition(
     target: LatLng(0.0, 0.0),
   );
@@ -29,12 +28,6 @@ class _HomeScreenState extends State<HomeScreen> with UiLoggy {
           if (state.status == DataStatus.successful) {
             final features = state.response?.features ?? <FeatureModel>[];
 
-            final coordinatesString = features
-                .map((element) => element.coordinates)
-                .map((element) => '${element.latitude},${element.longitude}')
-                .join(' | ');
-            loggy.debug('Add symbols at $coordinatesString');
-
             _mapController?.addSymbols(
               features
                   .map(
@@ -46,6 +39,25 @@ class _HomeScreenState extends State<HomeScreen> with UiLoggy {
                   )
                   .toList(),
             );
+            _mapController?.onSymbolTapped.add((Symbol argument) {
+              final symbolLocation = argument.options.geometry;
+              if (symbolLocation != null) {
+                _mapController?.animateCamera(
+                  CameraUpdate.newLatLng(symbolLocation),
+                );
+
+                final pointOfInterest = features[int.parse(argument.id)];
+                if (pointOfInterest.pointID.isNotEmpty) {
+                  showDialog<void>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: Text(pointOfInterest.title),
+                      content: Text(pointOfInterest.fullPlaceName),
+                    ),
+                  );
+                }
+              }
+            });
           } else if (state.status == DataStatus.failed) {
             showDialog<void>(
               context: context,
