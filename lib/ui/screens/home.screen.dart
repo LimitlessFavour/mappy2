@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: MapboxMap(
         accessToken: const String.fromEnvironment('ACCESS_TOKEN'),
         initialCameraPosition: _defaultCameraPosition,
+        myLocationEnabled: true,
         onMapCreated: (MapboxMapController controller) async {
           _mapController = controller;
 
