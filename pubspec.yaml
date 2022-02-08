@@ -26,6 +26,9 @@ dependencies:
   mapbox_gl: ^0.15.0
   location: ^4.3.0
 
+  # Utilities
+  equatable: ^2.0.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -42,3 +45,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/location_pin.png
