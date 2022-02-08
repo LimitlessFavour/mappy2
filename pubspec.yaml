@@ -11,8 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # Flutter Mapbox GL
+  # Flutter Mapbox GL + location
   mapbox_gl: ^0.15.0
+  location: ^4.3.0
 
 dev_dependencies:
   flutter_test:
