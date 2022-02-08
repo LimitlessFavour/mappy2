@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loggy/loggy.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:mappy2/data/blocs/data.cubit.dart';
 import 'package:mappy2/data/blocs/data.state.dart';
@@ -13,12 +14,12 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with UiLoggy {
   static const CameraPosition _defaultCameraPosition = CameraPosition(
     target: LatLng(0.0, 0.0),
   );
 
-  late final MapboxMapController _mapController;
+  MapboxMapController? _mapController;
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +28,19 @@ class _HomeScreenState extends State<HomeScreen> {
         listener: (BuildContext context, DataState state) {
           if (state.status == DataStatus.successful && state.response != null) {
             final features = state.response?.features ?? <FeatureModel>[];
-            _mapController.addSymbols(
+
+            final coordinatesString = features
+                .map((element) => element.coordinates)
+                .map((element) => '${element.latitude},${element.longitude}')
+                .join(', ');
+            loggy.debug('Add symbols at $coordinatesString');
+
+            _mapController?.addSymbols(
               features
                   .map(
                     (FeatureModel element) => SymbolOptions(
                       geometry: element.coordinates,
-                      iconImage: 'assets/location_pin.png',
+                      // iconImage: 'assets/location_pin.png',
                       draggable: false,
                     ),
                   )
@@ -71,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
 
-            _mapController.animateCamera(
+            _mapController?.animateCamera(
               CameraUpdate.newCameraPosition(
                 CameraPosition(
                   target: LatLng(
