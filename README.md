@@ -48,3 +48,5 @@ You can use the trivial unit test to check if points of interest are fetched cor
 ```bash
 flutter test --dart-define=ACCESS_TOKEN=<public-access-token>
 ```
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/sunderee)
