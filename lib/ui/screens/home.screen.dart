@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:location/location.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:mappy2/data/blocs/data.cubit.dart';
 import 'package:mappy2/data/blocs/data.state.dart';
 import 'package:mappy2/data/models/feature.model.dart';
 import 'package:mappy2/utils/location.util.dart';
+
+typedef OnLocationObtainedCallback = void Function(LocationData);
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -80,32 +83,39 @@ class _HomeScreenState extends State<HomeScreen> {
           accessToken: const String.fromEnvironment('ACCESS_TOKEN'),
           initialCameraPosition: _defaultCameraPosition,
           myLocationEnabled: true,
-          onMapCreated: (MapboxMapController controller) async {
-            _mapController = controller;
-
-            final location = await getCurrentLocation();
-            BlocProvider.of<DataCubit>(context).fetchPointsOfInterest(
+          onMapCreated: (MapboxMapController controller) => _onMapCreated(
+            controller,
+            (LocationData location) =>
+                BlocProvider.of<DataCubit>(context).fetchPointsOfInterest(
               LatLng(
                 location.latitude ?? 0.0,
                 location.longitude ?? 0.0,
               ),
-            );
-
-            _mapController?.animateCamera(
-              CameraUpdate.newCameraPosition(
-                CameraPosition(
-                  target: LatLng(
-                    location.latitude ?? 0.0,
-                    location.longitude ?? 0.0,
-                  ),
-                  zoom: 12.0,
-                ),
-              ),
-            );
-          },
-          onMapClick: (_, LatLng location) {},
+            ),
+          ),
         ),
       ),
     );
+  }
+
+  Future<void> _onMapCreated(
+    MapboxMapController controller,
+    OnLocationObtainedCallback callback,
+  ) async {
+    _mapController = controller;
+
+    final location = await getCurrentLocation();
+    _mapController?.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(
+            location.latitude ?? 0.0,
+            location.longitude ?? 0.0,
+          ),
+          zoom: 12.0,
+        ),
+      ),
+    );
+    callback.call(location);
   }
 }

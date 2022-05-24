@@ -1,4 +1,4 @@
-package com.peteralexbizjak.mappy2
+package com.peteralexbizjak.mappy
 
 import io.flutter.embedding.android.FlutterActivity
 

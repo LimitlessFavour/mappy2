@@ -1,15 +1,15 @@
 include: package:flutter_lints/flutter.yaml
 
 analyzer:
-  exclude:
-    - "build/**"
-    - "**/*.g.dart"
-    - "**/*.freezed.dart"
+  exclude: ["build/**", "**/*.g.dart", "**/*.freezed.dart"]
   errors:
+    undefined_prefixed_name: ignore
     invalid_annotation_target: ignore
   language:
     strict-casts: true
     strict-inference: true
     strict-raw-types: true
-  strong-mode:
-    implicit-dynamic: false
+
+linter:
+  rules:
+    prefer_single_quotes: true

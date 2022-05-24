@@ -11,5 +11,5 @@ key.properties
 **/*.keystore
 **/*.jks
 
-# Strings file
+# Strings
 strings.xml
