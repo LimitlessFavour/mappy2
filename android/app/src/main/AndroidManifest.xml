@@ -1,11 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.peteralexbizjak.mappy2">
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    
+    package="com.peteralexbizjak.mappy">
     <application
-        android:label="mappy2"
+        android:label="Mappy"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
